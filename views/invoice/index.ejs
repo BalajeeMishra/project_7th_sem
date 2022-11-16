@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Invoice | SkillPreceptor</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <main class="container px-2 d-hidden" id="element-to-print">
+        <h1 class="text-center">INVOICE</h1>
+        <!-- divider -->
+        <div class=" border-top border-2 border-dark w-100 mb-1"></div>
+        <div class=" border-top border-2 border-dark w-100 mb-1"></div>
+        <!-- company detail -->
+        <section class="px-3 row">
+            <div class="col-6">
+                <p class="fs-4">Invoice No: #<%= purchaseId %>
+                </p>
+                <h3>SARGENIX DBA SKILLPRECEPTOR</h3>
+                <h5>Address:</h5> 1309 Coffine Avenue STE 1200 Sheridan, Wyoming 82801
+            </div>
+            <div class="col-6 ">
+                <div class="d-flex justify-content-end w-100">
+                    <img src="/logo-1.png" alt="logo" />
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <h4>Date: <%= allPurchase[0].date %>
+                    </h4>
+                </div>
+            </div>
+        </section>
+        <!-- customer detail -->
+        </style>
+        <section class="px-3 card mt-4 border-0">
+            <div class="row">
+                <div class="col-2 fs-3">Sold to:</div>
+                <div class="col-4">
+                    <ul class="list-group list-group-flush rounded-0 border-0">
+                        <li class="list-group-item">
+                            <%= allPurchase[0]?.userId?.firstname %>
+                                <%= allPurchase[0]?.userId?.lastname %>
+                        </li>
+                        <li class="list-group-item">
+                            <%= allPurchase[0]?.userId?.email %>
+                        </li>
+                        <li class="list-group-item">
+                            <%= allPurchase[0]?.userId?.address %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- table => purchased item -->
+        <section class="px-3 mt-2">
+            <table class="table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product Type</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% allPurchase.forEach(purchase=> { %>
+                        <tr>
+                            <th scope="row">
+                                <%= purchase?.product?.title %>
+                            </th>
+                            <td>
+                                <%= purchase?.product?.types %>
+                            </td>
+                            <td>
+                                <%= purchase?.date %>
+                            </td>
+                            <td>
+                                <%= purchase?.purchaseOrder.reduce((acc,{quantity})=> acc+quantity,0) %>
+                            </td>
+                            <td>
+                                $<%= (purchase?.purchaseOrder.reduce((acc,{price})=> acc+price,0)).toFixed(2) %>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+                            <!-- Total Price -->
+                            <% totalPrice=(allPurchase.reduce((acc, {purchaseOrder})=>
+                                acc+purchaseOrder.reduce((accm,{totalPrice})=> accm+totalPrice,0),0)) %>
+                                <% discountPrice=allPurchase[0].discount %>
+                                    <% discount=discountPrice< 1? totalPrice*discountPrice : discountPrice %>
+                                        <tr>
+                                            <th scope="row">Total:</th>
+                                            <td colspan="3" class="text-center fw-semibold">
+                                                $ <%= discount? 'Discount: ' + discount.toFixed(2) : '' %>
+                                            </td>
+                                            <td>
+                                                $ <%= (totalPrice - discount).toFixed(2) %>
+                                            </td>
+                                        </tr>
+                </tbody>
+            </table>
+        </section>
+        <!-- footer -->
+        <section class="px-3 my-5">
+            <h4 class="text-center">
+                Thank You for Purchase.
+            </h4>
+            <!-- divider -->
+            <div class="border-top border-2 border-dark w-100 mb-1 mt-2"></div>
+            <div class="border-top border-2 border-dark w-100 mb-1"></div>
+            <!-- company detail -->
+            <div class="row ">
+                <div class="col-2 border-end border-2 border-dark">SkillPreceptor</div>
+                <div class="col-4 border-end border-2 border-dark">1309 Coffeene Avenue STE 1200<br /> Sheridan, Wyoming
+                    82801</div>
+                <div class="col-3 border-end border-2 border-dark">support@skillpreceptor.com</div>
+                <div class="col-2">+1-(855)-202-3299</div>
+            </div>
+        </section>
+    </main>
+
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/cdnjs/html2pdf.bundle.min.js"></script>
+    <script>
+        var element = document.getElementById('element-to-print');
+        html2pdf(element);
+    </script>
+</body>
+
+</html>

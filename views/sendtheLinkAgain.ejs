@@ -1,0 +1,18 @@
+<%- include("./layouts/header"); -%>
+
+    <div class="container-lg pt-5 pb-9">
+        <h5 class="mb-4"> Your Token is Expired, please generate a new one. Thanks </h5>
+        <form method="post" action="/user/sendthemailagain">
+            <div class="row flex-center">
+                <div class="col col-md-6">
+                    <input name="email" id="email" placeholder="Enter Your Registered Email"
+                        class="form-control rounded-0">
+                </div>
+                <button class="btn btn-secondary col">
+                    Send the mail again for verification.
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <%- include("./layouts/footer"); -%>

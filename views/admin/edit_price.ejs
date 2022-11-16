@@ -1,0 +1,71 @@
+<%- include("../layouts/header"); -%>
+
+    <section class="container-fluid py-5">
+        <div class="row">
+            <div class="col col-3">
+                <%- include('../partials/adminSideBar')%>
+            </div>
+            <div class="col col-9">
+                <div class="container">
+
+                    <a href="/price/all" class="btn btn-sm btn-secondary mb-3">Go Back</a>
+                    <div class="card">
+                        <form method="post" action="/price/edit_purchase/<%= purchase._id%>?_method=PUT"
+                            class="needs-validation" nonvalidate>
+                            <div class="row">
+                                <div class="col col-md-4 col-xl-3 mb-3">
+                                    <div class="input-group mt-md-4">
+                                        <label class="input-group-text bg-soft-secondary rounded-0" for="category"
+                                            style="height: 49px;">For:<sup class="text-danger">*</sup></label>
+                                        <select class="form-select rounded-0" name="for" id="category"
+                                            style="height: 49px;">
+                                            <% if (purchase.for=='Seminar' ) { %>
+                                                <option value="Webinar">Webinar Live</option>
+                                                <option value="Webinar_Recorded">Webinar Recorded</option>
+                                                <option value="Seminar" selected>Seminar Live</option>
+                                                <% } else if(purchase.for=='Webinar' ){ %>
+                                                    <option value="Webinar" selected>Webinar Live</option>
+                                                    <option value="Webinar_Recorded">Webinar Recorded</option>
+                                                    <option value="Seminar">Seminar Live</option>
+                                                    <% } else{%>
+                                                        <option value="Webinar">Webinar Live</option>
+                                                        <option value="Webinar_Recorded" selected>Webinar Recorded
+                                                        </option>
+                                                        <option value="Seminar">Seminar Live</option>
+                                                        <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3 col-xl-4 mb-3">
+                                    <label for="nameofpurchase" class="form-label">Purchase Name</label>
+                                    <input type="text" class="form-control rounded-0" id="nameofpurchase"
+                                        name="nameofpurchase" value="<%= purchase.nameofpurchase%>" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col col-md-3 col-xl-4 mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" class="form-control rounded-0" id="price" name="price"
+                                        value="<%= purchase.price%>" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col col-md-3 col-xl-4 mb-3">
+                                    <label for="order" class="form-label">Order</label>
+                                    <input type="number" class="form-control rounded-0" id="order" name="order"
+                                        value="<%= purchase.order%>" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary mt-2" type="submit">SAVE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include("../layouts/footer"); -%>

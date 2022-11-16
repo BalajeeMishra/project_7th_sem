@@ -1,0 +1,92 @@
+<%- include('../layouts/header') %>
+
+    <section class="container-fluid py-5">
+        <div class="row">
+            <div class="col col-3">
+                <%- include('../partials/userSideBar') %>
+            </div>
+            <div class="col col-9">
+                <hr />
+                <div class="card">
+                    <%- purchase_history.length?'':'<h4 class="text-center mt-5">No Credentials Found.</h4>' %>
+                        <%purchase_history.forEach((e,i)=> { %>
+                            <% if(e?.product?.status=="Recorded" ) {%>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">ProductId: </p>
+                                    <p class="col-9 card-subtitle fs-2 mb-3">
+                                        <%=e.product.webinarId %>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">Webinar Name: </p>
+                                    <p class="col-9 card-subtitle fs-2 mb-3">
+                                        <%=e.product.title %>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">Duration: </p>
+                                    <p class="col-9 card-subtitle fs-2 mb-3">
+                                        <%=e.product.duration %> minutes
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">Speaker: </p>
+                                    <p class="col-9 card-subtitle fs-2 mb-3">
+                                        <%=e.product.name %>
+
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">Watch Now: </p>
+
+                                    <a class="col-2 nav-link card-subtitle fs-2 mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal<%=i%>" href="<%=e.product.urlofseminar %>">
+                                        Click
+                                        Here </a>
+
+                                    <div class="modal fade" id="exampleModal<%=i%>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div style="padding:75% 0 0 0;position:relative;"><iframe
+                                                            src="<%=e.product.urlofseminar.trim()%>?h=289a8a36bb&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                            frameborder="0"
+                                                            allow="autoplay; fullscreen; picture-in-picture"
+                                                            allowfullscreen
+                                                            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                                            title="recorded.mp4"></iframe>
+                                                    </div>
+                                                    <script src="https://player.vimeo.com/api/player.js"></script>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal" onclick="myFun()">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p class="col-3 card-subtitle fs-2 mb-3">Download Transcript: </p>
+                                    <a class="col-2 nav-link card-subtitle fs-2 mb-3" href="#seminarId"> Click Here </a>
+                                </div>
+                                <% } %>
+                                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+
+
+    </section>
+    <script>
+        function myFun() {
+            window.location.href = '<%= process.env.YOUR_DOMAIN%>/user/dashboard';
+        }
+    </script>
+
+
+    <%- include('../layouts/footer') %>

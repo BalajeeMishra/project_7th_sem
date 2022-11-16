@@ -1,0 +1,38 @@
+<%- include("../layouts/header"); -%>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">phone number</th>
+                <th scope="col">Date of Registraion</th>
+                <th scope="col">Verify</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% user.forEach((u)=>{ %>
+                <tr>
+                    <td>
+                        <%=u.firstname %>
+                    </td>
+                    <td>
+                        <%=u.email %>
+                    </td>
+                    <td>
+                        <%=u.phone %>
+                    </td>
+                    <td>
+                        <%=u.datetoregister %>
+                    </td>
+                    <td>
+                        <%=u.verify %>
+                    </td>
+                    <td>
+                        <a href="/user/dashboard/<%=u._id%>">Details</a>
+                    </td>
+                </tr>
+                <%}) %>
+        </tbody>
+    </table>
+    <%- include("../layouts/footer"); -%>

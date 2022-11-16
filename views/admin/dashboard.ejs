@@ -1,0 +1,101 @@
+<%- include("../layouts/header"); -%>
+
+    <section class="container-fluid py-5">
+        <div class="row">
+            <div class="col col-3">
+                <%- include('../partials/adminSideBar')%>
+            </div>
+            <div class="col col-9">
+                <div class="row flex-center">
+                    <h4 class="text-center mb-4">REVENUE</h4>
+                    <div class="col col-sm-4 col-md-4 d-flex flex-center">
+                        <div class="card flex-center rounded-circle bg-info shadow-lg fw-medium"
+                            style="width: 160px;height:160px;">
+                            <span class="fs-2 text-dark">
+                                $<%= todayRevenueAmount %>
+                            </span>
+                            <div class="fs-3 text-dark">
+                                <a href="/transactiondetail/today" class="nav-link">
+                                    Today
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-sm-4 col-md-4 d-flex flex-center">
+                        <div class="card flex-center rounded-circle bg-info shadow-lg fw-medium"
+                            style="width: 160px;height:160px;">
+                            <span class="fs-2 text-dark">
+                                $<%= weeklyRevenueAmount %>
+                            </span>
+                            <div class="fs-3 text-dark">
+                                <a href="/transactiondetail/weekly" class="nav-link">Weekly</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-sm-4 col-md-4 d-flex flex-center">
+                        <div class="card flex-center rounded-circle bg-info shadow-lg fw-medium"
+                            style="width: 160px;height:160px;">
+                            <span class="fs-2 text-dark">
+                                $<%= monthlyRevenueAmount %>
+                            </span>
+                            <div class="fs-3 text-dark">
+                                <a href="/transactiondetail/monthly" class="nav-link">Monthly</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-4 border-2 border-soft-secondary border-top pt-4">
+                    <div class="col col-3 d-flex flex-center">
+                        <div class="d-flex flex-center">
+                            <div class="card flex-center ">
+                                <span
+                                    class="text-light d-flex flex-center rounded-circle bg-secondary shadow-lg fw-medium fs-3"
+                                    style="width: 100px;height:100px;">
+                                    <%= monthlySubscriber %>
+                                </span>
+                                <div class="text-dark mt-2 fw-medium">
+                                    <a href="/admin/lead/maillist" class="nav-link text-dark">
+                                        Subscriber's this month
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-9">
+                        <h5>Visiter's Responses</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sender</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Comment</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% leads.forEach(lead=> { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= lead?.name || lead?.email %>
+                                        </th>
+                                        <th scope="row">
+                                            <%= lead?.contact_type %>
+                                        </th>
+                                        <th scope="row">
+                                            <%= lead?.message %>
+                                        </th>
+                                        <th scope="row">
+                                            <%= lead?.date %>
+                                        </th>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include("../layouts/footer"); -%>

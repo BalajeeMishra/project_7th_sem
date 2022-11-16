@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Invoice | SkillPreceptor</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <button class="btn btn-primary" onclick="downloadPdf();">Download</button>
+    <main class="container px-2 d-hidden" id="element-to-print">
+        <h1 class="text-center">INVOICE</h1>
+        <!-- divider -->
+        <div class=" border-top border-2 border-dark w-100 mb-1"></div>
+        <div class=" border-top border-2 border-dark w-100 mb-1"></div>
+        <!-- company detail -->
+        <section class="px-3 row">
+            <div class="col-6">
+                <p class="fs-4">Invoice No: #<%= purchaseId %>
+                </p>
+                <h3>SKILLPRECEPTOR (DBA SARGENIX)</h3>
+                <h5>Address:</h5> Lorem ipsum dolor sit amet consectetur.
+            </div>
+            <div class="col-6 ">
+                <div class="d-flex justify-content-end w-100">
+                    <img src="./logo-1.png" alt="logo" />
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <h4>Date: <%= date %>
+                    </h4>
+                </div>
+            </div>
+        </section>
+        <!-- customer detail -->
+        </style>
+        <section class="px-3 card mt-4 border-0">
+            <div class="row">
+                <div class="col-2 fs-3">Sold to:</div>
+                <div class="col-4">
+                    <ul class="list-group list-group-flush rounded-0 border-0">
+                        <li class="list-group-item">
+                            <%= customer.name %>
+                        </li>
+                        <li class="list-group-item">
+                            <%= customer.email %>
+                        </li>
+                        <li class="list-group-item">
+                            <%= customer.address %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- table => purchased item -->
+        <section class="px-3 mt-2">
+            <table class="table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product Type</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <%= product.title %>
+                        </th>
+                        <td>
+                            <%= product.type %>
+                        </td>
+                        <td>
+                            <%= product.date %>
+                        </td>
+                        <td>
+                            <%= product.quantity %>
+                        </td>
+                        <td>
+                            $<%= product.price %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <%= product.title %>
+                        </th>
+                        <td>
+                            <%= product.type %>
+                        </td>
+                        <td>
+                            <%= product.date %>
+                        </td>
+                        <td>
+                            <%= product.quantity %>
+                        </td>
+                        <td>
+                            $<%= product.price %>
+                        </td>
+                    </tr>
+                    <!-- Total Price -->
+                    <tr>
+                        <th scope="row">Total:</th>
+                        <td colspan="3">{Two Hundreds Ninty Eight Dallers}</td>
+                        <td>
+                            $<%= totalPrice %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <!-- footer -->
+    </main>
+
+    <!-- Bootstrap Plugin -->
+    <!-- <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="./cdnjs/html2pdf.bundle.min.js"></script>
+    <script>
+        var element = document.getElementById('element-to-print');
+        const downloadPdf = () => html2pdf(element);
+    </script>
+</body>
+
+</html>

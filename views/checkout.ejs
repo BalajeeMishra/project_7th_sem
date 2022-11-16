@@ -1,0 +1,104 @@
+<%- include('layouts/header')%>
+    <%- include('partials/stripePlugin')%>
+
+        <% Total=0,TotalPrice=0 %>
+            <div class="container-lg p-sm-7">
+                <div class="row flex-center">
+                    <div class="col col-md-7">
+                        <div class="card">
+                            <form action="/cart/edit/profile" method="post">
+                                <div class="row mb-2">
+                                    <label for="name" class="col-3 card-subtitle fs-2 mb-3">Name: </label>
+                                    <input class="col-sm-3 pe-sm-2 user-detail-input me-2" type="text" name="firstname"
+                                        id="name" placeholder="Your Name" value="<%= userdata?.firstname %>" required />
+                                    <input class="col-sm-3 pe-sm-2 user-detail-input" type="text" name="lastname"
+                                        id="name" placeholder="Your Name" value="<%= userdata?.lastname %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="email" class="col-3 card-subtitle fs-2 mb-3">Email Address: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="email" name="email"
+                                        id="email" placeholder="Your Email" value="<%= userdata?.email %>" disabled />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="phone" class="col-3 card-subtitle fs-2 mb-3">Phone: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="tel" name="phone" id="phone"
+                                        placeholder="Your Contact no." minlength="10" value="<%= userdata?.phone %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="address" class="col-3 card-subtitle fs-2 mb-3">Address: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="text" name="address"
+                                        id="address" placeholder="Your Address" value="<%= userdata?.address %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="job-title" class="col-3 card-subtitle fs-2 mb-3">Job Title: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="text" name="jobtitle"
+                                        id="job-title" placeholder="Job Title" value="<%= userdata?.jobtitle %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="country" class="col-3 card-subtitle fs-2 mb-3">Country: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="text" name="country"
+                                        id="country" placeholder="Your Country Name" value="<%= userdata?.country %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="state" class="col-3 card-subtitle fs-2 mb-3">State: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="text" name="state"
+                                        id="state" placeholder="Your State" value="<%= userdata?.state %>" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label for="zip-code" class="col-3 card-subtitle fs-2 mb-3">Zip Code: </label>
+                                    <input class="col-sm-4 pe-sm-2 user-detail-input" type="text" name="zipcode"
+                                        id="zip-code" placeholder="86352" value="<%= userdata?.zipcode %>" />
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="row justify-content-between">
+                                <h4 class="col col-md-7">Item</h4>
+                                <h4 class="col col-md-4">
+                                    Qty
+                                </h4>
+                                <hr />
+                            </div>
+                            <% cart.forEach(c=> { %>
+                                <% c.categoryofprice.forEach((e)=>{ %>
+                                    <% Total=Total+(e.price)*(e.quantity); %>
+                                        <% TotalPrice=TotalPrice+Total; %>
+                                            <div class="row justify-content-between py-0">
+                                                <p class="col col-md-7 fs-1">
+                                                    <%= c.product.title %>
+                                                </p>
+                                                <p class="col col-md-4 m-0">
+                                                    <%= e.quantity %> x <%= (e.price).toFixed(2) %>
+                                                </p>
+                                            </div>
+                                            <% }) %>
+                                                <% }) %>
+                        </div>
+                        <!-- Stripe Payment Form -->
+                        <form action="/payment/paymentwithstripe/checkout" method="POST">
+                            <div class="product">
+                                <div class="description mb-3">
+                                    <p class="fw-medium">Your Checkout Total</p>
+                                    <span class="fs-1 ms-auto me-4">$ <%=total %></span>
+                                    <input type="hidden" name="totalprice" value="<%=total %>">
+                                </div>
+                            </div>
+                            <button type="submit" id="checkout-button">Pay with Stripe</button>
+                        </form>
+                        <!-- Paypal Payment Form -->
+                        <form action="/payment/paymentwithpaypal" method="POST">
+                            <input type="hidden" name="totalpayment" value="<%=total%>">
+                            <button type="submit" class="btn btn-sm btn-outline-primary w-100 mt-2">Pay with
+                                Paypal</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            <%- include('layouts/footer')%>
